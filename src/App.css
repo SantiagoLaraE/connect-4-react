@@ -1,0 +1,231 @@
+:root {
+  --bg-color: #16171b;
+  --items-bg-color: #1f2024;
+  --text-color: #fff;
+  --yellow: #fa9e40;
+  --red: #d6282b;
+  --bdr-color: #444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: flex-start center;
+  gap: 16px;
+}
+
+
+.board {
+  grid-column: 1/3;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  position: relative;
+  width: 100%;
+  border: 16px solid var(--items-bg-color);
+  border-radius: 24px;
+  outline: 1px solid var(--bdr-color);
+}
+.col {
+  position: relative;
+  cursor: pointer;
+}
+.col::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  position: absolute;
+  border-radius: 24px;
+  top: 0;
+  left: 0;
+  transition: border-color 0.2s ease;
+  z-index: 10;
+}
+.col:hover::after {
+  border-color: var(--bdr-color);
+}
+
+.slot {
+  width: 100%;
+  aspect-ratio: 1/1;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.slot::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--items-bg-color);
+  -webkit-mask-image: radial-gradient(
+    ellipse,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 1) 60%
+  );
+  mask-image: radial-gradient(
+    ellipse,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 1) 60%
+  );
+  position: absolute;
+  top: 0;
+  z-index: 10;
+}
+
+.disc {
+  width: 80%;
+  height: 80%;
+  border-radius: 100%;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  z-index: -1;
+  transition: transform ease;
+  animation: disc-translate ease-in-out forwards reverse;
+}
+@keyframes disc-translate {
+  from{
+    transform:inherit;
+  }
+  to{
+    transform: translateY('0px') !important;
+  }
+}
+
+
+.disc::after {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 60%;
+  height: 60%;
+  border-radius: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.yellow {
+  background-color: var(--yellow);
+  box-shadow: 0 0 64px rgba(250, 158, 64, 0.5);
+}
+
+.red {
+  background-color: var(--red);
+  box-shadow: 0 0 64px rgba(214, 40, 43, 0.5);
+}
+
+.TurnCard {
+  width: 100%;
+  min-width: 108px;
+  max-width: 180px;
+  padding: 24px;
+  margin: 0 auto;
+  background-color: var(--items-bg-color);
+  border-radius: 24px;
+  border: 1px solid var(--bdr-color);
+}
+
+.TurnCard__disc {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  display: grid;
+  place-items: center;
+  background-color: var(--bg-color);
+  border-radius: 24px;
+  border: 1px solid var(--bdr-color);
+  padding: 24px;
+  font-size: 18px;
+}
+.TurnCard__disc .disc {
+  z-index: unset;
+  width: 60%;
+  height: 60%;
+}
+
+.TurnCard__title {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.TurnCard__turn {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.Header {
+  font-size: 18px;
+  text-align: center;
+}
+
+.Header__title {
+  font-size: 40px;
+}
+.Header__btns {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.Button {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 18px;
+  font-family: "Josefin Sans", sans-serif;
+  background-color: var(--bdr-color);
+  color: var(--text-color);
+  border: 1px solid var(--bdr-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.Button:hover {
+  background-color: var(--bg-color);
+}
+
+.Button.outline {
+  background-color: var(--bg-color);
+}
+.Button.outline:hover {
+  background-color: var(--bdr-color);
+}
+
+
+
+@media screen and (min-width: 768px) {
+  .container{
+    grid-template-columns: repeat(5, 1fr);
+    gap: 32px;
+    place-items: flex-start normal;
+  }
+
+  .board + .TurnCard__wrapper{
+    order: -1;
+  }
+  .board{
+    grid-column: 2/5;
+  }
+
+  .TurnCard__wrapper{
+    margin-top: 64px;
+    font-size: 24px;
+  }
+
+}
+
